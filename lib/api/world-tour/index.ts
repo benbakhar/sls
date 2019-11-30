@@ -1,39 +1,44 @@
-import $ from 'cheerio';
-import fetchPage from '../../helpers/fetch-page';
+import $ from "cheerio";
+import fetchPage from "../../shared/fetch-page";
 
-const PAGE_URL = 'http://streetleague.com/tickets';
+const PAGE_URL = "http://streetleague.com/tickets";
 
-interface WorldTourLocation {
-  location: string
-  venue: string
-  date: string
+interface IWorldTourLocation {
+  location: string;
+  venue: string;
+  date: string;
 }
 
 interface IWorldTourResponse {
   year: number;
-  locations: Array<WorldTourLocation>;
+  locations: IWorldTourLocation[];
 }
 
-export async function list(): Promise<IWorldTourResponse> {
-  const locations = []
-  const html = await fetchPage(PAGE_URL);
+const parsePage = (html: string): IWorldTourResponse => {
+  const locations: IWorldTourLocation[] = [];
 
-  const year = +$('#content .container .page-title-heading', html).text().replace(/\D/g, '')
+  const year = +$("#content .container .page-title-heading", html).text().replace(/\D/g, "");
 
-  $('#content #event-items li', html).map((_, event) => {
-    const location = $(event).find('.event-title h4 a').text()
-    const venue = $(event).find('.event-venue').text()
-    const date = $(event).find('.event-date span').slice(0, 1).text()
+  $("#content #event-items li", html).map((_, eventItem) => {
+    const location = $(eventItem).find(".event-title h4 a").text();
+    const venue = $(eventItem).find(".event-venue").text();
+    const date = $(eventItem).find(".event-date span").slice(0, 1).text();
 
     locations.push({
+      date,
       location,
       venue,
-      date
-    })
-  })
+    });
+  });
 
   return {
+    locations,
     year,
-    locations
-  }
+  };
+};
+
+export async function get(): Promise<IWorldTourResponse> {
+  const html = await fetchPage(PAGE_URL);
+
+  return parsePage(html);
 }

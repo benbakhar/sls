@@ -1,4 +1,4 @@
-import fetch, { Response, FetchError } from 'node-fetch';
+import fetch, { FetchError, Response } from "node-fetch";
 
 interface IFetchPageResponse {
   html: string;
@@ -8,28 +8,28 @@ interface IFetchPageResponse {
 }
 
 const parsePage = (response: Response): Promise<IFetchPageResponse> =>
-  response.text().then(html => ({
+  response.text().then((html) => ({
     html,
     ok: response.ok,
     status: response.status,
-    statusText: response.statusText
-  }))
+    statusText: response.statusText,
+  }));
 
 const onSuccess = (response: IFetchPageResponse) => {
   if (!response.ok) {
-    throw new FetchError(response.statusText, response.status.toString())
+    return "";
   }
 
   return response.html;
-}
+};
 
-const onError = (error: FetchError) => {
-  throw error
-}
+const onError = (_: FetchError) => {
+  return "";
+};
 
 export default function fetchPage(url: string, options = {}): Promise<string> {
   return fetch(url, options)
     .then(parsePage)
     .then(onSuccess)
-    .catch(onError)
+    .catch(onError);
 }

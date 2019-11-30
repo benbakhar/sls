@@ -1,7 +1,9 @@
-import { nineClubApi, worldTourApi } from './api'
+import {
+  nineClubApi as nineClub,
+  worldTourApi as worldTour,
+} from "./api";
 
-function main() {
-  return worldTourApi.list()
-}
-
-main().then(console.log)
+export default {
+  nineClub,
+  worldTour,
+};

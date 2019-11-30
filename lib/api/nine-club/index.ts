@@ -1,39 +1,59 @@
-import $ from 'cheerio';
-import fetchPage from '../../helpers/fetch-page';
+import $ from "cheerio";
+import fetchPage from "../../shared/fetch-page";
+import { filterBySkater, filterTopScores } from "./filters";
 
-const PAGE_URL = 'https://streetleague.com/the-9-club/';
+const PAGE_URL = "https://streetleague.com/the-9-club/";
 
 interface INineCluber {
-  name: string;
+  skater: string;
   trick: string;
   videoUrl: string;
 }
 
-interface INineClubResponse {
-  [key: string]: Array<INineCluber>
+export interface INineClubResponse {
+  [key: string]: INineCluber[];
 }
 
-export async function list(): Promise<INineClubResponse> {
-  const result = {};
+export interface INineClubQuery {
+  limit?: number;
+  skater?: string;
+}
 
-  const html = await fetchPage(PAGE_URL);
+const parsePage = (html: string): INineClubResponse => {
+  const result: INineClubResponse = {};
 
-  const highestScore = $('.page-body >.nine_club_header', html).text().trim()
+  const highestScore = $(".page-body >.nine_club_header", html).text().trim();
 
-  $('.page-body #accordion .clubHead', html).map((_, skater: any) => {
-    const score = $(skater).prevAll('.nine_club_header').slice(0, 1).text().trim() || highestScore
-    const name = $(skater).children('h4').text()
-    const trick = $(skater).children('.trick').text()
-    const videoId = $(skater).next('.accordion-content').children('.uid').text();
-    const videoUrl = `https://www.youtube.com/${videoId}`
+  $(".page-body #accordion .clubHead", html).map((_, partial: any) => {
+    const score = $(partial).prevAll(".nine_club_header").slice(0, 1).text().trim() || highestScore;
 
-    result[score] = result[score] || []
+    const skater = $(partial).children("h4").text();
+    const trick = $(partial).children(".trick").text();
+    const videoId = $(partial).next(".accordion-content").children(".uid").text();
+    const videoUrl = `https://www.youtube.com/${videoId}`;
+
+    result[score] = result[score] || [];
     result[score].push({
-      name,
+      skater,
       trick,
-      videoUrl
-    })
+      videoUrl,
+    });
   });
 
   return result;
+};
+
+export async function get(query: INineClubQuery = {}): Promise<INineClubResponse> {
+  const html = await fetchPage(PAGE_URL);
+  let json = parsePage(html);
+
+  if (query.skater) {
+    json = filterBySkater(json, query.skater);
+  }
+
+  if (query.limit > 0) {
+    json = filterTopScores(json, query.limit);
+  }
+
+  return json;
 }

@@ -1,7 +1,7 @@
-import * as nineClubApi from './nine-club'
-import * as worldTourApi from './world-tour'
+import * as nineClubApi from "./nine-club";
+import * as worldTourApi from "./world-tour";
 
 export {
   nineClubApi,
-  worldTourApi
-}
+  worldTourApi,
+};
