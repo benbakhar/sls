@@ -1,7 +1,7 @@
 {
-  "name": "sls-cli",
+  "name": "sls",
   "version": "0.0.1",
-  "description": "",
+  "description": "Nike SLS API",
   "scripts": {
     "lint": "npx tslint -c tslint.json -p tsconfig.json",
     "postinstall": "npm run build",
