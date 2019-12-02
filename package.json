@@ -1,0 +1,27 @@
+{
+  "name": "sls-cli",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "lint": "npx tslint -c tslint.json -p tsconfig.json",
+    "postinstall": "npm run build",
+    "build": "tsc"
+  },
+  "bin": {
+    "sls": "./build/bin/index.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "commander": "^4.0.1",
+    "node-fetch": "^2.6.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.14",
+    "@types/node-fetch": "^2.5.4",
+    "ts-node": "^8.5.2",
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.2"
+  },
+  "author": "Ben Bakhar",
+  "license": "ISC"
+}
