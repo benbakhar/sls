@@ -1,5 +1,5 @@
 {
-  "name": "sls",
+  "name": "@benbakhar/sls",
   "version": "0.0.1",
   "description": "Nike SLS API",
   "scripts": {
