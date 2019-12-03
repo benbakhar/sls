@@ -1,4 +1,7 @@
 # Nike sls Api
+
+<img src="https://img.shields.io/npm/v/@benbakhar/sls.svg?style=flat"/>
+
 ```js
 import sls from 'sls'
 ```
