@@ -1,4 +1,6 @@
 .gitignore
+.vscode/
 .circleci/
-CODEOWNERS
+lib/
+bin/
 package-lock.json
