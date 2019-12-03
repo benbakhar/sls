@@ -2,10 +2,12 @@
 
 import program from "commander";
 import { nineClubApi, worldTourApi } from "../lib/api";
+import { version } from "../package.json";
 
 program
   .name("sls")
-  .usage("[command] [options]");
+  .usage("[command] [options]")
+  .version(version);
 
 program
   .command("world-tour")
