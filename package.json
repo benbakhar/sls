@@ -1,6 +1,6 @@
 {
   "name": "@benbakhar/sls",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Nike SLS API",
   "scripts": {
     "lint": "npx tslint -c tslint.json -p tsconfig.json",
