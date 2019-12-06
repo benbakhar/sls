@@ -53,6 +53,7 @@ workflows:
             tags:
               only: /^v.*/
       - deploy:
+          context: benz-global
           requires:
             - test
           filters:
