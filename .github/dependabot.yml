@@ -9,5 +9,5 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
-    default_assignees:
-      - "benbakhar"
+#     default_assignees:
+#       - "benbakhar"
