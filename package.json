@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
-    "commander": "^4.0.1",
+    "commander": "^6.2.1",
     "node-fetch": "^2.6.0"
   },
   "keywords": [
